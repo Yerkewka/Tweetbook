@@ -1,0 +1,7 @@
+.vs/
+Tweetbook/bin
+Tweetbook/obj
+Tweetbook/Properties
+Tweetbook.IntegrationTests/bin
+Tweetbook.IntegrationTests/obj
+Tweetbook.IntegrationTests/Properties

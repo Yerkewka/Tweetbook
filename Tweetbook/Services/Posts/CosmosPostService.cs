@@ -1,0 +1,70 @@
+﻿using Cosmonaut;
+using Cosmonaut.Extensions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Tweetbook.Domain;
+using Tweetbook.Domain.Cosmos;
+
+namespace Tweetbook.Services.Posts
+{
+    public class CosmosPostService : IPostService
+    {
+        private readonly ICosmosStore<CosmosPost> _cosmosStore;
+
+        public CosmosPostService(ICosmosStore<CosmosPost> cosmosStore)
+        {
+            _cosmosStore = cosmosStore;
+        }
+
+        public async Task<bool> CreatePostAsync(Post postToCreate)
+        {
+            var cosmosPost = new CosmosPost
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = postToCreate.Name
+            };
+
+            var response = await _cosmosStore.AddAsync(cosmosPost);
+            return response.IsSuccess;
+        }
+
+        public async Task<bool> DeletePostAsync(Guid postId)
+        {
+            var response = await _cosmosStore.RemoveByIdAsync(postId.ToString(), postId.ToString());
+            return response.IsSuccess;
+        }
+
+        public async Task<Post> GetPostByIdAsync(Guid postId)
+        {
+            var post = await _cosmosStore.FindAsync(postId.ToString(), postId.ToString());
+
+            return post == null ? null : new Post { Id = Guid.Parse(post.Id), Name = post.Name };
+        }
+
+        public async Task<List<Post>> GetPostsAsync()
+        {
+            var posts = await _cosmosStore.Query().ToListAsync();
+
+            return posts.Select(x => new Post { Id = Guid.Parse(x.Id), Name = x.Name }).ToList();
+        }
+
+        public async Task<bool> UpdatePostAsync(Post postToUpdate)
+        {
+            var cosmosPost = new CosmosPost
+            {
+                Id = postToUpdate.Id.ToString(),
+                Name = postToUpdate.Name
+            };
+
+            var response = await _cosmosStore.UpdateAsync(cosmosPost);
+            return response.IsSuccess;
+        }
+
+        public Task<bool> UserOwnsPostAsync(Guid postId, string userId)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
