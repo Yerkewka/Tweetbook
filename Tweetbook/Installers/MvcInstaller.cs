@@ -15,6 +15,7 @@ using Tweetbook.Authorization.WorksForCompany;
 using Tweetbook.Options;
 using Tweetbook.Services.Indentity;
 using FluentValidation.AspNetCore;
+using Tweetbook.Filters;
 
 namespace Tweetbook.Installers
 {
@@ -31,6 +32,7 @@ namespace Tweetbook.Installers
             services
                 .AddMvc(options => {
                     options.EnableEndpointRouting = false;
+                    options.Filters.Add<ValidationFilter>();
                 })
                 .AddFluentValidation(mvcConfiguration => mvcConfiguration.RegisterValidatorsFromAssemblyContaining<Startup>())
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);

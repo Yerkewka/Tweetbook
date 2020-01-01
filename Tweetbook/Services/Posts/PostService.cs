@@ -82,8 +82,8 @@ namespace Tweetbook.Services.Posts
         public async Task<bool> CreateTagAsync(Tag tag)
         {
             tag.Name = tag.Name.ToLower();
-            var existingTag = await _dataContext.Tags.SingleOrDefaultAsync(x => x.Name == tag.Name);
-            if (existingTag == null)
+            var existingTag = await _dataContext.Tags.AsNoTracking().SingleOrDefaultAsync(x => x.Name == tag.Name);
+            if (existingTag != null)
                 return true;
 
             await _dataContext.Tags.AddAsync(tag);
