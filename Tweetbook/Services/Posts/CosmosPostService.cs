@@ -6,10 +6,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Tweetbook.Domain;
 using Tweetbook.Domain.Cosmos;
+using Tweetbook.Domain.Post;
 
 namespace Tweetbook.Services.Posts
 {
-    public class CosmosPostService : IPostService
+    public class CosmosPostService
     {
         private readonly ICosmosStore<CosmosPost> _cosmosStore;
 

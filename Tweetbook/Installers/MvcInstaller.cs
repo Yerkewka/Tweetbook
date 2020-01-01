@@ -4,14 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
+using Tweetbook.Authorization.WorksForCompany;
 using Tweetbook.Options;
 using Tweetbook.Services.Indentity;
+using FluentValidation.AspNetCore;
 
 namespace Tweetbook.Installers
 {
@@ -25,9 +28,12 @@ namespace Tweetbook.Installers
 
             services.AddScoped<IIdentityService, IdentityService>();
 
-            services.AddMvc(options => {
-                options.EnableEndpointRouting = false;
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services
+                .AddMvc(options => {
+                    options.EnableEndpointRouting = false;
+                })
+                .AddFluentValidation(mvcConfiguration => mvcConfiguration.RegisterValidatorsFromAssemblyContaining<Startup>())
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             var tokenValidationParameters = new TokenValidationParameters
             {
@@ -55,8 +61,14 @@ namespace Tweetbook.Installers
                 });
 
             services.AddAuthorization(options => {
-                options.AddPolicy("TagViewer", builder => builder.RequireClaim("tags.view", "true"));
+                options.AddPolicy("TagViewer", policy => policy.RequireClaim("tags.view", "true"));
+                options.AddPolicy("WorksForCompanyYerkewka", policy =>
+                {
+                    policy.AddRequirements(new WorksForCompanyRequirement("yerkewka.com"));
+                });
             });
+
+            services.AddSingleton<IAuthorizationHandler, WorksForCompanyHandler>();
 
             services.AddSwaggerGen(x =>
             {

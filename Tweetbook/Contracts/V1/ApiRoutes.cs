@@ -19,6 +19,14 @@ namespace Tweetbook.Contracts.V1
             public const string Delete = Base + "/posts/{postId}";
         }
 
+        public static class Tags
+        {
+            public const string GetAll = Base + "/tags";
+            public const string Get = Base + "/tags/{tagName}";
+            public const string Create = Base + "/tags";
+            public const string Delete = Base + "/tags/{tagName}";
+        }
+
         public static class Identity
         {
             public const string Login = Base + "/identity/login";

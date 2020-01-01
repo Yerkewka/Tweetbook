@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace Tweetbook.Contracts.V1.Requests.Posts
 {
-    public class CreatePostRequest
+    public class CreateTagRequest
     {
-        public string Name { get; set; }
-        public IEnumerable<string> Tags { get; set; }
+        public string TagName { get; set; }
     }
 }

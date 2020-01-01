@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Tweetbook.Domain;
+using Tweetbook.Domain.Post;
 
 namespace Tweetbook.Services.Posts
 {
@@ -14,5 +14,9 @@ namespace Tweetbook.Services.Posts
         Task<bool> UpdatePostAsync(Post postToUpdate);
         Task<bool> DeletePostAsync(Guid postId);
         Task<bool> UserOwnsPostAsync(Guid postId, string userId);
+        Task<List<Tag>> GetAllTagsAsync();
+        Task<bool> CreateTagAsync(Tag tag);
+        Task<Tag> GetTagByNameAsync(string tagName);
+        Task<bool> DeleteTagAsync(string tagName);
     }
 }
