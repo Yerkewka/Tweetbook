@@ -1,0 +1,12 @@
+D:\Projects\C#\Tweetbook\Tweetbook.Sdk\bin\Debug\netcoreapp3.0\Tweetbook.Sdk.deps.json
+D:\Projects\C#\Tweetbook\Tweetbook.Sdk\bin\Debug\netcoreapp3.0\Tweetbook.Sdk.dll
+D:\Projects\C#\Tweetbook\Tweetbook.Sdk\bin\Debug\netcoreapp3.0\Tweetbook.Contracts.dll
+D:\Projects\C#\Tweetbook\Tweetbook.Sdk\bin\Debug\netcoreapp3.0\Tweetbook.Contracts.pdb
+D:\Projects\C#\Tweetbook\Tweetbook.Sdk\obj\Debug\netcoreapp3.0\Tweetbook.Sdk.csprojAssemblyReference.cache
+D:\Projects\C#\Tweetbook\Tweetbook.Sdk\obj\Debug\netcoreapp3.0\Tweetbook.Sdk.AssemblyInfoInputs.cache
+D:\Projects\C#\Tweetbook\Tweetbook.Sdk\obj\Debug\netcoreapp3.0\Tweetbook.Sdk.AssemblyInfo.cs
+D:\Projects\C#\Tweetbook\Tweetbook.Sdk\obj\Debug\netcoreapp3.0\Tweetbook.Sdk.csproj.CopyComplete
+D:\Projects\C#\Tweetbook\Tweetbook.Sdk\bin\Debug\netcoreapp3.0\Tweetbook.Sdk.pdb
+D:\Projects\C#\Tweetbook\Tweetbook.Sdk\obj\Debug\netcoreapp3.0\RefitStubs.g.cs
+D:\Projects\C#\Tweetbook\Tweetbook.Sdk\obj\Debug\netcoreapp3.0\Tweetbook.Sdk.dll
+D:\Projects\C#\Tweetbook\Tweetbook.Sdk\obj\Debug\netcoreapp3.0\Tweetbook.Sdk.pdb

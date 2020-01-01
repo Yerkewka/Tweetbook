@@ -116,7 +116,7 @@ namespace Tweetbook.Services.Posts
             {
                 var existingTag = await _dataContext.Tags.SingleOrDefaultAsync(x => x.Name == tag.TagName);
 
-                if (existingTag == null)
+                if (existingTag != null)
                     continue;
 
                 await _dataContext.Tags.AddAsync(new Tag
