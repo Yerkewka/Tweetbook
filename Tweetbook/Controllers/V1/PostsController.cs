@@ -9,10 +9,12 @@ using System.Threading.Tasks;
 using Tweetbook.Cache;
 using Tweetbook.Contracts.V1;
 using Tweetbook.Contracts.V1.Requests.Posts;
+using Tweetbook.Contracts.V1.Requests.Posts.Queries;
 using Tweetbook.Contracts.V1.Requests.System.Queries;
 using Tweetbook.Contracts.V1.Responses.Posts;
 using Tweetbook.Contracts.V1.Responses.System;
 using Tweetbook.Domain.Post;
+using Tweetbook.Domain.Post.Filters;
 using Tweetbook.Domain.System;
 using Tweetbook.Extensions;
 using Tweetbook.Helpers;
@@ -37,11 +39,12 @@ namespace Tweetbook.Controllers.V1
 
         [HttpGet(ApiRoutes.Posts.GetAll)]
         [Cached(600)]
-        public async Task<IActionResult> GetAll([FromQuery]PaginationQuery paginationQuery)
+        public async Task<IActionResult> GetAll([FromQuery]GetAllPostsQuery query, [FromQuery]PaginationQuery paginationQuery)
         {
             var paginationFilter = _mapper.Map<PaginationFilter>(paginationQuery);
+            var filter = _mapper.Map<GetAllPostsFilter>(query);
 
-            var posts = await _postService.GetPostsAsync(paginationFilter);
+            var posts = await _postService.GetPostsAsync(query, paginationFilter);
             var postsResponse = _mapper.Map<List<PostResponse>>(posts);
             if (paginationFilter == null || paginationFilter.PageNumber < 1 || paginationFilter.PageSize < 1)
                 return Ok(new ApiPagedResponse<PostResponse>(postsResponse));
