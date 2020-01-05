@@ -10,6 +10,7 @@ using Tweetbook.Contracts.V1;
 using Tweetbook.Contracts.V1.Requests.Posts;
 using Tweetbook.Contracts.V1.Responses.Posts;
 using Tweetbook.Domain;
+using Tweetbook.Domain.Post;
 using Xunit;
 
 namespace Tweetbook.IntegrationTests
@@ -36,7 +37,7 @@ namespace Tweetbook.IntegrationTests
         {
             // Arrange
             await AuthenticateAsync();
-            var createdPost = await CreatePostAsync(new CreatePostRequest { Name = "My test post" });
+            var createdPost = await CreatePostAsync(new CreatePostRequest { Name = "My test post", Tags = new[] { "test tag" } });
 
             // Act
             var response = await TestClient.GetAsync(ApiRoutes.Posts.Get.Replace("{postId}", createdPost.Id.ToString() ));
