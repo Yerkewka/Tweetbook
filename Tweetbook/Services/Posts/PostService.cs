@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Tweetbook.Data;
 using Tweetbook.Domain.Post;
+using Tweetbook.Domain.System;
 
 namespace Tweetbook.Services.Posts
 {
@@ -45,9 +46,18 @@ namespace Tweetbook.Services.Posts
             return await _dataContext.Posts.SingleOrDefaultAsync(x => x.Id == postId);
         }
 
-        public async Task<List<Post>> GetPostsAsync()
+        public async Task<List<Post>> GetPostsAsync(PaginationFilter paginationFilter = null)
         {
-            return await _dataContext.Posts.ToListAsync();
+            if (paginationFilter == null)
+                return await _dataContext.Posts.Include(x => x.Tags).ToListAsync();
+
+            var skip = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
+
+            return await _dataContext.Posts
+                .Include(x => x.Tags)
+                .Skip(skip)
+                .Take(paginationFilter.PageSize)
+                .ToListAsync();
         }
 
         public async Task<bool> UpdatePostAsync(Post postToUpdate)

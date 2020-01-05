@@ -16,6 +16,8 @@ using Tweetbook.Options;
 using Tweetbook.Services.Indentity;
 using FluentValidation.AspNetCore;
 using Tweetbook.Filters;
+using Tweetbook.Services.System;
+using Microsoft.AspNetCore.Http;
 
 namespace Tweetbook.Installers
 {
@@ -71,6 +73,14 @@ namespace Tweetbook.Installers
             });
 
             services.AddSingleton<IAuthorizationHandler, WorksForCompanyHandler>();
+
+            services.AddSingleton<IUriService>(provider =>
+            {
+                var accessor = provider.GetRequiredService<IHttpContextAccessor>();
+                var request = accessor.HttpContext.Request;
+                var absoluteUri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent(), "/");
+                return new UriService(absoluteUri);
+            });
         }
     }
 }

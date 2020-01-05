@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Tweetbook.Domain.Post;
+using Tweetbook.Domain.System;
 
 namespace Tweetbook.Services.Posts
 {
     public interface IPostService
     {
-        Task<List<Post>> GetPostsAsync();
+        Task<List<Post>> GetPostsAsync(PaginationFilter paginationFilter = null);
         Task<Post> GetPostByIdAsync(Guid postId);
         Task<bool> CreatePostAsync(Post postToCreate);
         Task<bool> UpdatePostAsync(Post postToUpdate);
