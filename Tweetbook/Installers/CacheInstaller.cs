@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StackExchange.Redis;
 using Tweetbook.Cache;
 using Tweetbook.Services.Cache;
 
@@ -20,6 +21,7 @@ namespace Tweetbook.Installers
             if (!redisCacheSettings.Enabled)
                 return;
 
+            services.AddSingleton<IConnectionMultiplexer>(_ => ConnectionMultiplexer.Connect(redisCacheSettings.ConnectionString));
             services.AddStackExchangeRedisCache(options => options.Configuration = redisCacheSettings.ConnectionString);
             services.AddSingleton<IResponseCacheService, ResponseCacheService>();
         }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Tweetbook.Extensions
 {
-    public static class GeneralExtension
+    public static class GeneralExtensions
     {
         public static string GetUserId(this HttpContext httpContext)
         {
