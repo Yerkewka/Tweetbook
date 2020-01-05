@@ -44,7 +44,7 @@ namespace Tweetbook.Controllers.V1
             var paginationFilter = _mapper.Map<PaginationFilter>(paginationQuery);
             var filter = _mapper.Map<GetAllPostsFilter>(query);
 
-            var posts = await _postService.GetPostsAsync(query, paginationFilter);
+            var posts = await _postService.GetPostsAsync(filter, paginationFilter);
             var postsResponse = _mapper.Map<List<PostResponse>>(posts);
             if (paginationFilter == null || paginationFilter.PageNumber < 1 || paginationFilter.PageSize < 1)
                 return Ok(new ApiPagedResponse<PostResponse>(postsResponse));
