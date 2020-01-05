@@ -10,6 +10,7 @@ using Tweetbook.Contracts.V1;
 using Tweetbook.Contracts.V1.Requests.Posts;
 using Tweetbook.Contracts.V1.Responses.Posts;
 using Tweetbook.Domain;
+using Tweetbook.Domain.Post;
 using Xunit;
 
 namespace Tweetbook.IntegrationTests
