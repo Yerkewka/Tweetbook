@@ -3,9 +3,16 @@ name: .NET Core
 on: [push]
 
 jobs:
-  build:
+  build-and-test:
 
     runs-on: ubuntu-latest
+
+    services:
+      redis:
+        image: redis
+        ports:
+        - 6379:6379
+        options: --entrypoint redis-server
 
     steps:
     - uses: actions/checkout@v1
@@ -15,3 +22,5 @@ jobs:
         dotnet-version: 3.0.100
     - name: Build with dotnet
       run: dotnet build --configuration Release
+    - name: Run tests
+      run: dotnet test --configuration Release
