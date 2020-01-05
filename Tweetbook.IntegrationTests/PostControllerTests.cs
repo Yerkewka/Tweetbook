@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Tweetbook.Contracts.V1;
 using Tweetbook.Contracts.V1.Requests.Posts;
 using Tweetbook.Contracts.V1.Responses.Posts;
+using Tweetbook.Contracts.V1.Responses.System;
 using Tweetbook.Domain;
 using Tweetbook.Domain.Post;
 using Xunit;
@@ -29,7 +30,7 @@ namespace Tweetbook.IntegrationTests
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             var responseString = await response.Content.ReadAsStringAsync();
-            (JsonConvert.DeserializeObject<List<Post>>(responseString)).Should().BeEmpty();
+            (JsonConvert.DeserializeObject<ApiPagedResponse<PostResponse>>(responseString)).Should().NotBeNull();
         }
 
         [Fact]
@@ -40,19 +41,19 @@ namespace Tweetbook.IntegrationTests
             var createdPost = await CreatePostAsync(new CreatePostRequest { Name = "My test post", Tags = new[] { "test tag" } });
 
             // Act
-            var response = await TestClient.GetAsync(ApiRoutes.Posts.Get.Replace("{postId}", createdPost.Id.ToString() ));
+            var response = await TestClient.GetAsync(ApiRoutes.Posts.Get.Replace("{postId}", createdPost.Data.Id.ToString() ));
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            var returnedPost = await response.Content.ReadAsAsync<Post>();
-            returnedPost.Id.Should().Be(createdPost.Id);
-            returnedPost.Name.Should().Be("My test post");
+            var returnedPost = await response.Content.ReadAsAsync<ApiResponse<PostResponse>>();
+            returnedPost.Data.Id.Should().Be(createdPost.Data.Id);
+            returnedPost.Data.Name.Should().Be("My test post");
         }
 
-        private async Task<PostResponse> CreatePostAsync(CreatePostRequest request)
+        private async Task<ApiResponse<PostResponse>> CreatePostAsync(CreatePostRequest request)
         {
             var response = await TestClient.PostAsJsonAsync(ApiRoutes.Posts.Create, request);
-            return await response.Content.ReadAsAsync<PostResponse>();
+            return await response.Content.ReadAsAsync<ApiResponse<PostResponse>>();
         }
     }
 }
